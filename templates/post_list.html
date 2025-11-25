@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>همه پست‌ها</h1>
+{% for post in posts %}
+    <div class="post">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content }}</p>
+        <small>نوشته شده توسط: {{ post.author.username }}</small>
+    </div>
+{% empty %}
+    <p>هنوز هیچ پستی وجود ندارد!</p>
+{% endfor %}
+{% endblock %}

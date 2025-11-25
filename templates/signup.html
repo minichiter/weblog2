@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+
+{% block title %}ثبت‌نام - وبلاگ من{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>ایجاد حساب کاربری</h2>
+            <p>لطفا اطلاعات خود را برای ثبت‌نام وارد کنید</p>
+        </div>
+
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}" class="form-label">
+                    {{ field.label }}
+                    {% if field.field.required %}
+                        <span class="required-star">*</span>
+                    {% endif %}
+                </label>
+                <div class="input-container">
+                    {% if field.name == 'username' %}
+                        <i class="input-icon">👤</i>
+                    {% elif field.name == 'email' %}
+                        <i class="input-icon">📧</i>
+                    {% elif 'password' in field.name %}
+                        <i class="input-icon">🔒</i>
+                    {% else %}
+                        <i class="input-icon">📝</i>
+                    {% endif %}
+                    
+                    {{ field }}
+                </div>
+                
+                {% if field.help_text %}
+                <div class="help-text">
+                    <i>💡</i>
+                    <span>{{ field.help_text }}</span>
+                </div>
+                {% endif %}
+                
+                {% if field.errors %}
+                <div class="field-errors">
+                    {% for error in field.errors %}
+                    <div class="error-message">
+                        <i>⚠️</i>
+                        <span>{{ error }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="auth-btn">
+                <span>ایجاد حساب کاربری</span>
+                <i class="btn-icon">🚀</i>
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <p>قبلاً حساب دارید؟ 
+                <a href="{% url 'login' %}" class="auth-link">وارد شوید</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+        padding: 2rem 1rem;
+    }
+
+    .auth-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 450px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .auth-header h2 {
+        color: #333;
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .auth-header p {
+        color: #666;
+        font-size: 0.95rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #444;
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    .required-star {
+        color: #e53e3e;
+        margin-right: 0.25rem;
+    }
+
+    .input-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .input-icon {
+        position: absolute;
+        right: 1rem;
+        font-size: 1.1rem;
+        color: #888;
+        z-index: 2;
+    }
+
+    .auth-form input:not([type="checkbox"]):not([type="radio"]) {
+        width: 100%;
+        padding: 0.85rem 3rem 0.85rem 1rem;
+        border: 2px solid #e1e5e9;
+        border-radius: 10px;
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: #fafbfc;
+        position: relative;
+    }
+
+    .auth-form input:focus {
+        outline: none;
+        border-color: #4361ee;
+        background-color: white;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+    }
+
+    .auth-form input::placeholder {
+        color: #aaa;
+    }
+
+    .help-text {
+        background-color: #f0f9ff;
+        border: 1px solid #bae6fd;
+        border-radius: 6px;
+        padding: 0.5rem 0.75rem;
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+        color: #0369a1;
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .field-errors {
+        margin-top: 0.5rem;
+    }
+
+    .error-message {
+        background-color: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 6px;
+        padding: 0.5rem 0.75rem;
+        margin-top: 0.25rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+        color: #dc2626;
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .auth-btn {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .auth-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3);
+        background: linear-gradient(135deg, #4338ca, #6d28d9);
+    }
+
+    .auth-btn:active {
+        transform: translateY(0);
+    }
+
+    .btn-icon {
+        font-size: 1.1rem;
+        transition: transform 0.3s ease;
+    }
+
+    .auth-btn:hover .btn-icon {
+        transform: translateY(-2px);
+    }
+
+    .auth-footer {
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #eee;
+    }
+
+    .auth-footer p {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .auth-link {
+        color: #4f46e5;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .auth-link:hover {
+        color: #3730a3;
+        text-decoration: underline;
+    }
+
+    /* استایل برای فیلدهای چک‌باکس */
+    .auth-form input[type="checkbox"] {
+        margin-left: 0.5rem;
+        transform: scale(1.1);
+    }
+
+    /* بهبود نمایش فیلدهای مختلف */
+    .auth-form select {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        border: 2px solid #e1e5e9;
+        border-radius: 10px;
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 1rem;
+        background-color: #fafbfc;
+        cursor: pointer;
+    }
+
+    .auth-form textarea {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        border: 2px solid #e1e5e9;
+        border-radius: 10px;
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 1rem;
+        background-color: #fafbfc;
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    @media (max-width: 480px) {
+        .auth-card {
+            padding: 2rem 1.5rem;
+        }
+        
+        .auth-header h2 {
+            font-size: 1.5rem;
+        }
+        
+        .auth-form input:not([type="checkbox"]):not([type="radio"]) {
+            padding: 0.75rem 2.5rem 0.75rem 1rem;
+        }
+        
+        .input-icon {
+            right: 0.75rem;
+        }
+    }
+</style>
+{% endblock %}

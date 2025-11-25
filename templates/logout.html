@@ -1,0 +1,91 @@
+<form action="{% url 'logout' %}" method="post" class="logout-form">
+    {% csrf_token %}
+    <button type="submit" class="logout-btn">
+        <span class="logout-icon">🚪</span>
+        <span class="logout-text">خروج</span>
+    </button>
+</form>
+
+<style>
+    .logout-form {
+        display: inline;
+    }
+
+    .logout-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .logout-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #ff8787, #ff6b6b);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .logout-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    }
+
+    .logout-btn:hover::before {
+        opacity: 1;
+    }
+
+    .logout-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 5px rgba(255, 107, 107, 0.3);
+    }
+
+    .logout-icon {
+        font-size: 1.1rem;
+        position: relative;
+        z-index: 1;
+        transition: transform 0.3s ease;
+    }
+
+    .logout-text {
+        position: relative;
+        z-index: 1;
+    }
+
+    .logout-btn:hover .logout-icon {
+        transform: translateX(-3px);
+    }
+
+    /* حالت موبایل */
+    @media (max-width: 768px) {
+        .logout-btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .logout-icon {
+            font-size: 1rem;
+        }
+    }
+
+    /* حالت زمانی که در هدر قرار می‌گیرد */
+    .auth-section .logout-btn {
+        margin-right: 0.5rem;
+    }
+</style>
